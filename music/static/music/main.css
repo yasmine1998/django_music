@@ -1,0 +1,44 @@
+body, html{
+    background-image: url("universe.jpg");
+    height: 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow-x: scroll;
+    padding:2px;
+    margin:2px;
+}
+.navbar{
+    border-radius: 0;
+}
+.navbar-brand{
+    font-family: 'Satisfy', cursive;
+    color: #fafafa;
+}
+h1, .text {
+    color: #d7e1e4;
+  }
+  ul {
+    margin: 0;
+  }
+  .site-header .navbar-nav .nav-link {
+    color: #cbd5db;
+  }
+  .site-header .navbar-nav .nav-link:hover {
+    color: #ffffff;
+  }
+  .site-header .navbar-nav .nav-link.active {
+    font-weight: 500;
+  }
+  .reg {
+    margin: 0 auto;
+     margin-top: 200px;
+  }
+  .content-section {
+  
+    padding: 70px 30px;
+  }
+  .form-group {
+    color: #ffffff;
+    font-weight: bold;
+  }

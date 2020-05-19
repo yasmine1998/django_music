@@ -1,0 +1,48 @@
+{% extends "music/base.html" %}
+{% block albums_active %}active{% endblock %}
+{% block body %}
+<div class=" container-fluid">
+    <div class="row form-group">
+        <div class="col-sm-12 form-group"> 
+            <h3>All Albums</h3>
+        </div>
+        {% if all_albums %}
+            {% for album in all_albums %}
+                {% if user.request == album.user or album.is_public %}
+                        <div class="card mr-4 mt-3" style="width: 18rem;">
+                            <a href="{% url 'detail' album.id %}">
+                                <img src="{{album.album_file.url}}" class="card-img-top" >
+                            </a>
+                            <div class="figure-caption">
+                                <a href="{% url 'detail' album.id %}">
+                                <h2><strong>{{ album.title }}</strong> - {{ album.artist }}</h2></a>
+                                <a href="{% url 'detail' album.id %}" 
+                                    class="btn btn-primary btn-sm" role="button">View Details</a>
+                                {% if user.id == album.user.id  %}
+                                    <form action="{% url 'delete-album' album.id %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="album_id" value="{{ album.id }}" />
+                                        <button type="submit" class="btn btn-default btn-lg">
+                                            <svg class="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z"/>
+                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                    <a href="{% url 'album_public' album.id %}" class="btn btn-default btn-lg btn-favorite" role="button">
+                                        <svg class="bi bi-reply-fill" width="1em" height="1em" viewBox="0 0 16 16" {% if album.is_public %}fill="#8cc63f"{% endif %} xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9.079 11.9l4.568-3.281a.719.719 0 000-1.238L9.079 4.1A.716.716 0 008 4.719V6c-1.5 0-6 0-7 8 2.5-4.5 7-4 7-4v1.281c0 .56.606.898 1.079.62z"/>
+                                        </svg>
+                                    </a>
+                                {% endif %}
+                                <br>
+                                    <p>Uploaded by : {{album.user.username}}</p>
+                            </div>
+                        </div>
+                    {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+                {% endif %}
+            {% endfor %} 
+        {% endif %}
+    </div>
+</div>
+{% endblock body %}
