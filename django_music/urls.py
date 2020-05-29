@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from music import views as music_views
-from django.contrib.auth import views as auth_views 
+from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -18,7 +18,7 @@ urlpatterns = [
     path('albums/<int:album_id>/song_public/<int:song_id>/',music_views.song_is_public,name="song_public"),
     path('albums/<int:album_id>/song_favorite/<int:song_id>/',music_views.song_is_favorite,name="song_favorite"),
     path('albums/<int:album_id>/DeleteSong/<int:song_id>',music_views.DeleteSong,name="song-delete"),
-    
+
     path('albums/filter/',music_views.filter,name="filter"),
     path('login/', auth_views.LoginView.as_view(template_name='music/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='music/logout.html'), name='logout'),
@@ -28,6 +28,10 @@ urlpatterns = [
     path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='music/password_reset_complete.html'), name='password_reset_complete'),
     path('register/', music_views.register, name='register'),
 ]
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+#Media
+from . import settings
+from django.contrib.staticfiles.urls import static, staticfiles_urlpatterns
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
